@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_blockchain/linking/contract_linking.dart';
 
@@ -162,6 +163,21 @@ class _CreateTodoState extends State<CreateTodo> {
                               isLoading = true;
                             });
                             String transactionHash = "";
+
+                            var taskBox = Hive.box('task-box');
+                            taskBox.add(Task(
+                                id: int.parse(panController.text),
+                                name: nameController.text,
+                                phone: phoneController.text,
+                                aadhaar: aadhaarController.text,
+                                age: int.parse(ageController.text),
+                                amount: int.parse(amountController.text),
+                                bank: bankController.text,
+                                city: cityController.text,
+                                doctor: doctorController.text,
+                                ifsc: ifscController.text,
+                                pan: panController.text,
+                                pincode: pincodeController.text));
 
                             contractLinking
                                 .addTask(

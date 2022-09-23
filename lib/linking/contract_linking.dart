@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:web3dart/web3dart.dart';
 
@@ -206,6 +207,21 @@ class ContractLinking extends ChangeNotifier {
         ),
         chainId: 1337);
     return transactionHash;
+  }
+
+  Future<void> sendTransactions() async{
+
+    // TODO: PERFORM TRANSACTION HERE
+
+    var taskBox = Hive.box('task-box');
+
+    for(int i = 0; i < taskBox.length; i++){
+      Task t = taskBox.getAt(i);
+      // task is stored in temporary variabe t.
+    }
+
+    taskBox.clear();
+
   }
 }
 
