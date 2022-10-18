@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_blockchain/linking/contract_linking.dart';
 import 'package:todolist_blockchain/screens/all_todos.dart';
+import 'package:todolist_blockchain/screens/cached_data.dart';
 import 'package:todolist_blockchain/screens/create_todo.dart';
 import 'package:todolist_blockchain/screens/delete_todo.dart';
 import 'package:todolist_blockchain/screens/mark_done.dart';
@@ -21,46 +22,58 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var contractLinking = Provider.of<ContractLinking>(context);
     return Center(
-      child: Column(
-        children: [
-          const SizedBox(height: 50),
-          CreateButton(
-              text: "Create New Todo",
-              onPressed: () {
-                toCreate(context);
-              }),
-          const SizedBox(height: 50),
-          CreateButton(
-            text: "View All Todos",
-            onPressed: () async {
-              bool accessed = await contractLinking.getTodos();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AllTodos(
-                    accessed: accessed,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 20,
+        // width: 280,
+        child: ListView(
+          children: [
+            const SizedBox(height: 50),
+            CreateButton(
+                text: "Create New Todo",
+                onPressed: () {
+                  toCreate(context);
+                }),
+            const SizedBox(height: 50),
+            CreateButton(
+              text: "View All Todos",
+              onPressed: () async {
+                bool accessed = await contractLinking.getTodos();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AllTodos(
+                      accessed: accessed,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 50),
-          CreateButton(
-            text: "Mark Done",
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MarkDone()));
-            },
-          ),
-          const SizedBox(height: 50),
-          CreateButton(
-            text: "Delete Todo",
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DeleteTodo()));
-            },
-          ),
-        ],
+                );
+              },
+            ),
+            const SizedBox(height: 50),
+            CreateButton(
+              text: "View Cached",
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CachedData()));
+              },
+            ),
+            const SizedBox(height: 50),
+            CreateButton(
+              text: "Mark Done",
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MarkDone()));
+              },
+            ),
+            const SizedBox(height: 50),
+            CreateButton(
+              text: "Delete Todo",
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DeleteTodo()));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

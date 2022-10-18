@@ -17,6 +17,7 @@ dependencies:
   web_socket_channel: ^2.2.0
   hive:
   hive_flutter:
+  flutter_web3: ^2.1.9
 
 dev_dependencies:
   flutter_test:

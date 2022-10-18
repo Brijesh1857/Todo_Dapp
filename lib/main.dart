@@ -3,10 +3,11 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_blockchain/linking/contract_linking.dart';
-import './screens/home_page.dart';
+import 'package:todolist_blockchain/screens/launch.dart';
 
-void main() async{
+import 'linking/metamask_linking.dart';
 
+void main() async {
   await Hive.initFlutter();
   Hive.openBox('task-box');
   runApp(const MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ContractLinking()),
+        ChangeNotifierProvider(create: (_) => MetaMaskProvider()),
       ],
       child: MaterialApp(
         title: "TodoList",
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
             title: const Text("TodoList"),
             backgroundColor: Colors.teal.shade700,
           ),
-          body: HomePage(),
+          body: const LaunchScreen(),
         ),
       ),
     );

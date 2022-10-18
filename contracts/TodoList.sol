@@ -29,6 +29,7 @@ contract TodoList {
   event TaskAdded(uint taskCount, string name, string aadhaar, string pan, string bank, string ifsc, string phone, string doctor, string city, string pincode, uint age, uint amount);
   event DeleteTask(uint id);
   event MarkDone(uint id);
+  event addMultiples(Task[] details);
 
   function getTaskCount() public view returns(uint) {
     return taskCount;
@@ -61,4 +62,11 @@ contract TodoList {
     return todos[_id - 1];
   }
 
+  function addMultiple(Task[] memory details) public {
+    for(uint i = 0; i < details.length; ++i) {
+      ++taskCount;
+      todos.push(details[i]);
+    }
+    emit addMultiples(details);
+  }
 }

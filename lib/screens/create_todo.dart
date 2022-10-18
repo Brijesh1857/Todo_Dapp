@@ -141,115 +141,146 @@ class _CreateTodoState extends State<CreateTodo> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    Center(
-                      child: Container(
-                        height: 40,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            gradient: LinearGradient(colors: [
-                              Colors.blueAccent,
-                              Colors.blue.shade200,
-                              Colors.lightBlue.shade100
-                            ]),
-                            boxShadow: const [
-                              BoxShadow(color: Colors.black26, blurRadius: 30)
-                            ]),
-                        child: MaterialButton(
-                          onPressed: () {
-                            // print(contentController.text);
-                            var start = DateTime.now();
-                            setState(() {
-                              isLoading = true;
-                            });
-                            String transactionHash = "";
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: LinearGradient(colors: [
+                                Colors.blueAccent,
+                                Colors.blue.shade200,
+                                Colors.lightBlue.shade100
+                              ]),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.black26, blurRadius: 30)
+                              ]),
+                          child: MaterialButton(
+                            onPressed: () {
+                              // print(contentController.text);
+                              var start = DateTime.now();
+                              setState(() {
+                                isLoading = true;
+                              });
+                              String transactionHash = "";
 
-                            var taskBox = Hive.box('task-box');
-                            taskBox.add(Task(
-                                id: int.parse(panController.text),
-                                name: nameController.text,
-                                phone: phoneController.text,
-                                aadhaar: aadhaarController.text,
-                                age: int.parse(ageController.text),
-                                amount: int.parse(amountController.text),
-                                bank: bankController.text,
-                                city: cityController.text,
-                                doctor: doctorController.text,
-                                ifsc: ifscController.text,
-                                pan: panController.text,
-                                pincode: pincodeController.text));
+                              contractLinking
+                                  .addTask(
+                                      name: nameController.text,
+                                      age: int.parse(ageController.text),
+                                      aadhaar: aadhaarController.text,
+                                      pan: panController.text,
+                                      bank: bankController.text,
+                                      ifsc: ifscController.text,
+                                      // branch: branchController.text,
+                                      // address: addressController.text,
+                                      phone: phoneController.text,
+                                      doctor: doctorController.text,
+                                      city: cityController.text,
+                                      pincode: pincodeController.text,
+                                      amount: int.parse(amountController.text))
+                                  .then(
+                                (value) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  transactionHash = value;
+                                  // Navigator.pop(context);
+                                  var end = DateTime.now();
+                                  var timeTaken = end.difference(start);
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: Text(
+                                                transactionHash.isNotEmpty
+                                                    ? "Todo Added"
+                                                    : "Error"),
+                                            content: Text(transactionHash
+                                                    .isNotEmpty
+                                                ? "Transaction Hash: $transactionHash\nTime Taken = $timeTaken"
+                                                : "Error occurred in accessing blockchain"),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  nameController.clear();
+                                                  aadhaarController.clear();
+                                                  ageController.clear();
+                                                  panController.clear();
+                                                  bankController.clear();
+                                                  ifscController.clear();
+                                                  // branchController.clear();
+                                                  // addressController.clear();
+                                                  phoneController.clear();
+                                                  doctorController.clear();
+                                                  cityController.clear();
+                                                  pincodeController.clear();
+                                                  amountController.clear();
 
-                            contractLinking
-                                .addTask(
-                                    name: nameController.text,
-                                    age: int.parse(ageController.text),
-                                    aadhaar: aadhaarController.text,
-                                    pan: panController.text,
-                                    bank: bankController.text,
-                                    ifsc: ifscController.text,
-                                    // branch: branchController.text,
-                                    // address: addressController.text,
-                                    phone: phoneController.text,
-                                    doctor: doctorController.text,
-                                    city: cityController.text,
-                                    pincode: pincodeController.text,
-                                    amount: int.parse(amountController.text))
-                                .then(
-                              (value) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                transactionHash = value;
-                                // Navigator.pop(context);
-                                var end = DateTime.now();
-                                var timeTaken = end.difference(start);
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text(transactionHash.isNotEmpty
-                                              ? "Todo Added"
-                                              : "Error"),
-                                          content: Text(transactionHash
-                                                  .isNotEmpty
-                                              ? "Transaction Hash: $transactionHash\nTime Taken = $timeTaken"
-                                              : "Error occurred in accessing blockchain"),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                nameController.clear();
-                                                aadhaarController.clear();
-                                                ageController.clear();
-                                                panController.clear();
-                                                bankController.clear();
-                                                ifscController.clear();
-                                                // branchController.clear();
-                                                // addressController.clear();
-                                                phoneController.clear();
-                                                doctorController.clear();
-                                                cityController.clear();
-                                                pincodeController.clear();
-                                                amountController.clear();
-
-                                                int count = 0;
-                                                Navigator.of(context).popUntil(
-                                                    (_) => count++ >= 2);
-                                              },
-                                              child: const Text("Ok"),
-                                            )
-                                          ],
-                                        ));
-                              },
-                            );
-                          },
-                          elevation: 5.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                                                  int count = 0;
+                                                  Navigator.of(context)
+                                                      .popUntil(
+                                                          (_) => count++ >= 2);
+                                                },
+                                                child: const Text("Ok"),
+                                              )
+                                            ],
+                                          ));
+                                },
+                              );
+                            },
+                            elevation: 5.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: const Text("Add",
+                                style: TextStyle(fontSize: 20)),
                           ),
-                          child:
-                              const Text("Add", style: TextStyle(fontSize: 20)),
                         ),
-                      ),
-                    )
+                        Container(
+                          height: 40,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: LinearGradient(colors: [
+                                Colors.blueAccent,
+                                Colors.blue.shade200,
+                                Colors.lightBlue.shade100
+                              ]),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.black26, blurRadius: 30)
+                              ]),
+                          child: MaterialButton(
+                            onPressed: () {
+                              var taskBox = Hive.box('task-box');
+                              taskBox.add(
+                                Task(
+                                    id: 1,
+                                    name: nameController.text,
+                                    phone: phoneController.text,
+                                    aadhaar: aadhaarController.text,
+                                    age: int.parse(ageController.text),
+                                    amount: int.parse(amountController.text),
+                                    bank: bankController.text,
+                                    city: cityController.text,
+                                    doctor: doctorController.text,
+                                    ifsc: ifscController.text,
+                                    pan: panController.text,
+                                    pincode: pincodeController.text),
+                              );
+                            },
+                            elevation: 5.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: const Text("Cache",
+                                style: TextStyle(fontSize: 20)),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),

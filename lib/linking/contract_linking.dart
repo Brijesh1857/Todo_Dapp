@@ -12,7 +12,7 @@ class ContractLinking extends ChangeNotifier {
   final String _rpcUrl = "http://127.0.0.1:8545";
   final String _wsUrl = "ws://127.0.0.1:8545/";
   final String _privateKey =
-      "0x1d195bb5be73dffafe64674c5a57ffd0b0edfacf4221b461500ba68042040557";
+      "0xeb56ddb7315133d2c38dde0d907914b5eef6f3188503e6fcb41c92ef15eb9274";
 
   late Web3Client _client;
   List<Task> todos = [];
@@ -52,7 +52,7 @@ class ContractLinking extends ChangeNotifier {
   Future<void> getCredentials() async {
     _credentials = EthPrivateKey.fromHex(_privateKey);
     _contractAddress =
-        EthereumAddress.fromHex("0xf2a23cA848F4B0702d45f6150099CFb68b585B63");
+        EthereumAddress.fromHex("0x2038C72a1df088Be77D695d08e75b40EAfd31ac4");
   }
 
   Future<void> getDeployedContracts() async {
@@ -209,19 +209,29 @@ class ContractLinking extends ChangeNotifier {
     return transactionHash;
   }
 
-  Future<void> sendTransactions() async{
-
+  Future<void> sendTransactions() async {
     // TODO: PERFORM TRANSACTION HERE
 
     var taskBox = Hive.box('task-box');
-
-    for(int i = 0; i < taskBox.length; i++){
+    List<dynamic> allTasks;
+    for (int i = 0; i < taskBox.length; i++) {
       Task t = taskBox.getAt(i);
-      // task is stored in temporary variabe t.
+      // task is stored in temporary variable.
+
+      List<dynamic>? tmp;
+      tmp!.add(t.name);
+      tmp.add(t.aadhaar);
+      tmp.add(t.pan);
+      tmp.add(t.bank);
+      tmp.add(t.ifsc);
+      tmp.add(t.phone);
+      tmp.add(t.doctor);
+      tmp.add(t.city);
+      tmp.add(t.pincode);
+      tmp.add(BigInt.from(t.age));
+      tmp.add(BigInt.from(t.amount));
     }
-
     taskBox.clear();
-
   }
 }
 
