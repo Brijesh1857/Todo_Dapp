@@ -12,7 +12,7 @@ class AllTodos extends StatelessWidget {
     List<Task> allTodos = contractLinking.todos;
     return Scaffold(
         appBar: AppBar(
-          title: const Text("All Todos"),
+          title: Text("All Todos - ${allTodos.length}"),
           backgroundColor: Colors.teal.shade700,
         ),
         body: accessed

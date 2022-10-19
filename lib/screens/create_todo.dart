@@ -191,42 +191,40 @@ class _CreateTodoState extends State<CreateTodo> {
                                   var end = DateTime.now();
                                   var timeTaken = end.difference(start);
                                   showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: Text(
-                                                transactionHash.isNotEmpty
-                                                    ? "Todo Added"
-                                                    : "Error"),
-                                            content: Text(transactionHash
-                                                    .isNotEmpty
-                                                ? "Transaction Hash: $transactionHash\nTime Taken = $timeTaken"
-                                                : "Error occurred in accessing blockchain"),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  nameController.clear();
-                                                  aadhaarController.clear();
-                                                  ageController.clear();
-                                                  panController.clear();
-                                                  bankController.clear();
-                                                  ifscController.clear();
-                                                  // branchController.clear();
-                                                  // addressController.clear();
-                                                  phoneController.clear();
-                                                  doctorController.clear();
-                                                  cityController.clear();
-                                                  pincodeController.clear();
-                                                  amountController.clear();
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text(transactionHash.isNotEmpty
+                                          ? "Todo Added"
+                                          : "Error"),
+                                      content: Text(transactionHash.isNotEmpty
+                                          ? "Transaction Hash: $transactionHash\nTime Taken = $timeTaken"
+                                          : "Error occurred in accessing blockchain"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            nameController.clear();
+                                            aadhaarController.clear();
+                                            ageController.clear();
+                                            panController.clear();
+                                            bankController.clear();
+                                            ifscController.clear();
+                                            // branchController.clear();
+                                            // addressController.clear();
+                                            phoneController.clear();
+                                            doctorController.clear();
+                                            cityController.clear();
+                                            pincodeController.clear();
+                                            amountController.clear();
 
-                                                  int count = 0;
-                                                  Navigator.of(context)
-                                                      .popUntil(
-                                                          (_) => count++ >= 2);
-                                                },
-                                                child: const Text("Ok"),
-                                              )
-                                            ],
-                                          ));
+                                            int count = 0;
+                                            Navigator.of(context)
+                                                .popUntil((_) => count++ >= 2);
+                                          },
+                                          child: const Text("Ok"),
+                                        )
+                                      ],
+                                    ),
+                                  );
                                 },
                               );
                             },
@@ -254,20 +252,52 @@ class _CreateTodoState extends State<CreateTodo> {
                           child: MaterialButton(
                             onPressed: () {
                               var taskBox = Hive.box('task-box');
-                              taskBox.add(
-                                Task(
-                                    id: 1,
-                                    name: nameController.text,
-                                    phone: phoneController.text,
-                                    aadhaar: aadhaarController.text,
-                                    age: int.parse(ageController.text),
-                                    amount: int.parse(amountController.text),
-                                    bank: bankController.text,
-                                    city: cityController.text,
-                                    doctor: doctorController.text,
-                                    ifsc: ifscController.text,
-                                    pan: panController.text,
-                                    pincode: pincodeController.text),
+                              taskBox.add(<String, dynamic>{
+                                "id": 1,
+                                "name": nameController.text,
+                                "phone": phoneController.text,
+                                "aadhaar": aadhaarController.text,
+                                "age": int.parse(ageController.text),
+                                "amount": int.parse(amountController.text),
+                                "bank": bankController.text,
+                                "city": cityController.text,
+                                "doctor": doctorController.text,
+                                "ifsc": ifscController.text,
+                                "pan": panController.text,
+                                "pincode": pincodeController.text
+                              }).then(
+                                (value) => showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text("Data saved"),
+                                    content: const Text(
+                                        "Data saved to local database"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          nameController.clear();
+                                          aadhaarController.clear();
+                                          ageController.clear();
+                                          panController.clear();
+                                          bankController.clear();
+                                          ifscController.clear();
+                                          // branchController.clear();
+                                          // addressController.clear();
+                                          phoneController.clear();
+                                          doctorController.clear();
+                                          cityController.clear();
+                                          pincodeController.clear();
+                                          amountController.clear();
+
+                                          int count = 0;
+                                          Navigator.of(context)
+                                              .popUntil((_) => count++ >= 2);
+                                        },
+                                        child: const Text("Ok"),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               );
                             },
                             elevation: 5.0,

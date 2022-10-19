@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist_blockchain/linking/contract_linking.dart';
-import 'package:todolist_blockchain/screens/launch.dart';
+import 'package:todolist_blockchain/screens/home_page.dart';
 
 import 'linking/metamask_linking.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             title: const Text("TodoList"),
             backgroundColor: Colors.teal.shade700,
           ),
-          body: const LaunchScreen(),
+          body: const HomePage(),
         ),
       ),
     );

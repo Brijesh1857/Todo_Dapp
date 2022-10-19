@@ -12,7 +12,7 @@ class ContractLinking extends ChangeNotifier {
   final String _rpcUrl = "http://127.0.0.1:8545";
   final String _wsUrl = "ws://127.0.0.1:8545/";
   final String _privateKey =
-      "0xeb56ddb7315133d2c38dde0d907914b5eef6f3188503e6fcb41c92ef15eb9274";
+      "0x5122bf83817dae432f2ea8f4f7b3f11f5ec730a24ba1d1279a34a7991a42f915";
 
   late Web3Client _client;
   List<Task> todos = [];
@@ -27,6 +27,7 @@ class ContractLinking extends ChangeNotifier {
   late ContractFunction _getTask;
   late ContractFunction _getTaskCount;
   late ContractFunction _deleteTodo;
+  late ContractFunction _addMultiple;
 
   ContractLinking() {
     initialSetup();
@@ -52,7 +53,7 @@ class ContractLinking extends ChangeNotifier {
   Future<void> getCredentials() async {
     _credentials = EthPrivateKey.fromHex(_privateKey);
     _contractAddress =
-        EthereumAddress.fromHex("0x2038C72a1df088Be77D695d08e75b40EAfd31ac4");
+        EthereumAddress.fromHex("0x7c432Aa930d375a3D0e651A2b3E6fA2Fa102726b");
   }
 
   Future<void> getDeployedContracts() async {
@@ -64,6 +65,8 @@ class ContractLinking extends ChangeNotifier {
     _markDone = _contract.function('markDone');
     _getTask = _contract.function('getTask');
     _deleteTodo = _contract.function('deleteTask');
+    _addMultiple = _contract.function('addMultiple');
+
     // getTodos();
   }
 
@@ -209,29 +212,50 @@ class ContractLinking extends ChangeNotifier {
     return transactionHash;
   }
 
-  Future<void> sendTransactions() async {
+  Future<String> sendTransactions() async {
     // TODO: PERFORM TRANSACTION HERE
 
     var taskBox = Hive.box('task-box');
-    List<dynamic> allTasks;
+    List<dynamic>? allTasks = [];
     for (int i = 0; i < taskBox.length; i++) {
-      Task t = taskBox.getAt(i);
+      Map<String, dynamic> t =
+          jsonDecode(jsonEncode(taskBox.getAt(i))) as Map<String, dynamic>;
       // task is stored in temporary variable.
 
-      List<dynamic>? tmp;
-      tmp!.add(t.name);
-      tmp.add(t.aadhaar);
-      tmp.add(t.pan);
-      tmp.add(t.bank);
-      tmp.add(t.ifsc);
-      tmp.add(t.phone);
-      tmp.add(t.doctor);
-      tmp.add(t.city);
-      tmp.add(t.pincode);
-      tmp.add(BigInt.from(t.age));
-      tmp.add(BigInt.from(t.amount));
+      List<dynamic> tmp = [];
+      tmp.add(BigInt.from(i));
+      tmp.add(t["name"]);
+      tmp.add(t["aadhaar"]);
+      tmp.add(t["pan"]);
+      tmp.add(t["bank"]);
+      tmp.add(t["ifsc"]);
+      tmp.add(t["phone"]);
+      tmp.add(t["doctor"]);
+      tmp.add(t["city"]);
+      tmp.add(t["pincode"]);
+      tmp.add(BigInt.from(t["age"]));
+      tmp.add(BigInt.from(t["amount"]));
+      allTasks.add(tmp);
     }
-    taskBox.clear();
+    // print(allTasks);
+
+    String transactionHash = "";
+    try {
+      transactionHash = await _client.sendTransaction(
+        _credentials,
+        Transaction.callContract(
+          contract: _contract,
+          function: _addMultiple,
+          parameters: [allTasks],
+          // maxGas: 1000000000000,
+        ),
+        chainId: 1337,
+      );
+      taskBox.clear();
+    } catch (e) {
+      print("Error!! Could not add multiple transactions");
+    }
+    return transactionHash;
   }
 }
 
