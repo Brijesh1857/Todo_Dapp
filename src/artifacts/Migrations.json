@@ -1061,10 +1061,16 @@
       "links": {},
       "address": "0x493dF20cC677368a86e200c43F1211Ab3465705b",
       "transactionHash": "0x2ad885aef6121ff95c0c569b220db22b4b5af53aff2af054a3baaf243862fbfa"
+    },
+    "1666263604299": {
+      "events": {},
+      "links": {},
+      "address": "0x7701168C86a0951EBe3B4Df8DDf7763d32D85bB3",
+      "transactionHash": "0xac51a2a8e17ef437c8d02827f3169ea610346fa478f77c3409bd1a9f97a33422"
     }
   },
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-10-19T10:04:34.098Z",
+  "updatedAt": "2022-10-20T11:00:45.352Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
