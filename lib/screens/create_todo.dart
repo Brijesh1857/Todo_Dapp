@@ -39,7 +39,7 @@ class _CreateTodoState extends State<CreateTodo> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: const Text("Create Todo"),
+            title: const Text("Add Data"),
             backgroundColor: Colors.teal.shade700,
           ),
           body: Stack(
@@ -194,7 +194,7 @@ class _CreateTodoState extends State<CreateTodo> {
                                     context: context,
                                     builder: (context) => AlertDialog(
                                       title: Text(transactionHash.isNotEmpty
-                                          ? "Todo Added"
+                                          ? "Data Added"
                                           : "Error"),
                                       content: Text(transactionHash.isNotEmpty
                                           ? "Transaction Hash: $transactionHash\nTime Taken = $timeTaken"

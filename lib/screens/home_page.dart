@@ -6,8 +6,6 @@ import 'package:todolist_blockchain/linking/contract_linking.dart';
 import 'package:todolist_blockchain/screens/all_todos.dart';
 import 'package:todolist_blockchain/screens/cached_data.dart';
 import 'package:todolist_blockchain/screens/create_todo.dart';
-import 'package:todolist_blockchain/screens/delete_todo.dart';
-import 'package:todolist_blockchain/screens/mark_done.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,13 +27,13 @@ class HomePage extends StatelessWidget {
           children: [
             const SizedBox(height: 50),
             CreateButton(
-                text: "Create New Todo",
+                text: "Add new data",
                 onPressed: () {
                   toCreate(context);
                 }),
             const SizedBox(height: 50),
             CreateButton(
-              text: "View All Todos",
+              text: "View All Data",
               onPressed: () async {
                 bool accessed = await contractLinking.getTodos();
                 Navigator.push(
@@ -57,21 +55,21 @@ class HomePage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 50),
-            CreateButton(
-              text: "Mark Done",
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MarkDone()));
-              },
-            ),
+            // CreateButton(
+            //   text: "Mark Done",
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => MarkDone()));
+            //   },
+            // ),
             const SizedBox(height: 50),
-            CreateButton(
-              text: "Delete Todo",
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DeleteTodo()));
-              },
-            ),
+            // CreateButton(
+            //   text: "Delete Todo",
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => DeleteTodo()));
+            //   },
+            // ),
           ],
         ),
       ),
