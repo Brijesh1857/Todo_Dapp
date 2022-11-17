@@ -7814,10 +7814,16 @@
       "links": {},
       "address": "0xeF84340673f35E84663f369A9cA7e461279a54A3",
       "transactionHash": "0x8d227b66390cd68a6f4955819fa1e7c94a81d790c04b126b458f7383162bb67f"
+    },
+    "1668681961717": {
+      "events": {},
+      "links": {},
+      "address": "0x8b23e124b4749E44Be8FFC4d8d4b4B78692D51e1",
+      "transactionHash": "0x1fc3b352cad79d84a16891cf4ecd3c645601fdf0842c782eaf7c0a5a724c3489"
     }
   },
   "schemaVersion": "3.4.5",
-  "updatedAt": "2022-11-08T10:38:39.324Z",
+  "updatedAt": "2022-11-17T10:46:18.399Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

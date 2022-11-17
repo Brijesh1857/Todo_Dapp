@@ -12,7 +12,7 @@ class ContractLinking extends ChangeNotifier {
   final String _rpcUrl = "http://127.0.0.1:8545";
   final String _wsUrl = "ws://127.0.0.1:8545/";
   final String _privateKey =
-      "0x10bd165d63cf7dc1c3b5bb45270e42878cda04af7b621bd30c20967721dd44f8";
+      "0x8c95bba1037e27dd992a0ce5ff851f9c8a6b3cb31d9f81b0b71715d703d3ba22";
 
   late Web3Client _client;
   List<Task> todos = [];
@@ -53,7 +53,7 @@ class ContractLinking extends ChangeNotifier {
   Future<void> getCredentials() async {
     _credentials = EthPrivateKey.fromHex(_privateKey);
     _contractAddress =
-        EthereumAddress.fromHex("0xeF84340673f35E84663f369A9cA7e461279a54A3");
+        EthereumAddress.fromHex("0x8b23e124b4749E44Be8FFC4d8d4b4B78692D51e1");
   }
 
   Future<void> getDeployedContracts() async {
